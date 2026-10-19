@@ -260,22 +260,22 @@ story-forge/
 
 ## 安装
 
-把整个 `story-forge/` 目录放到：
+唯一维护源：<https://github.com/birfly/story-forge>。
 
+```bash
+git clone https://github.com/birfly/story-forge.git ~/.claude/skills/story-forge
 ```
-~/.claude/skills/story-forge/
-```
 
-下次启动 Claude Code 时，它会作为 `story-forge@skills-dir` 自动加载。
+下次启动 Claude Code 时，它会作为 `story-forge@skills-dir` 自动加载。更新时在该目录执行 `git pull`。
 
-> 下面的命令用 `$CLAUDE_PLUGIN_ROOT` 指向插件根目录。如果当前环境没有设置这个变量，把它替换成插件的实际路径，通常是 `~/.claude/skills/story-forge`。
-
-也可以用 Claude Code 的插件脚手架：
+如果使用插件脚手架，也可以：
 
 ```bash
 claude plugin init story-forge
-# 然后把本目录的 skills/commands/engine/scripts 复制进去
+# 然后把本仓库的 skills/commands/engine/scripts 复制进去
 ```
+
+> 下面的命令用 `$CLAUDE_PLUGIN_ROOT` 指向插件根目录。如果当前环境没有设置这个变量，把它替换成插件的实际路径，通常是 `~/.claude/skills/story-forge`。
 
 安装后可用：
 
