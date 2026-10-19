@@ -1,0 +1,1 @@
+window.STORY_CONFIG = {title:"故事标题",subtitle:"富结构故事阅读站",brand:{mark:"STORY",name:"ARCHIVE"},ready:[],firstChapterId:null,accentPalette:["#e23a4e","#7fd6d6","#c9a227","#d98c5f","#6fbf8f","#7a9fe2"],footerNote:""};

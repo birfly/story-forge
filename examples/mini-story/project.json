@@ -1,0 +1,37 @@
+{
+  "slug": "mini-story",
+  "title": "灯塔的最后一班",
+  "subtitle": "一个关于交班、无线电和风暴的短故事",
+  "description": "把故事读成一张可以点开的网：人物、势力、地点、术语与证据，全部可点击、可回溯。",
+  "lede": "这不是一篇平铺的小说。人物、势力、地点、术语与证据被织成一张网——点开任何一个名字，都能看见它从哪里来、与谁相连。",
+  "eyebrow": "",
+  "brand": {
+    "mark": "STORY",
+    "name": "ARCHIVE"
+  },
+  "footerNote": "STORY ARCHIVE",
+  "footerDetail": "",
+  "sourceDir": "chapters",
+  "siteDir": "site",
+  "dataDir": "site/data",
+  "titleSeparator": "：",
+  "accentPalette": [
+    "#e23a4e",
+    "#7fd6d6",
+    "#c9a227",
+    "#d98c5f",
+    "#6fbf8f",
+    "#7a9fe2"
+  ],
+  "volumes": [
+    {
+      "id": "vol1",
+      "title": "第一卷 风暴",
+      "subtitle": "",
+      "order": 1,
+      "chapters": ["ch1", "ch2"]
+    }
+  ],
+  "ready": [],
+  "chapters": []
+}

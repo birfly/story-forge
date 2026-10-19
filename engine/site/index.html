@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>故事标题 · 富结构故事阅读站</title>
+  <meta name="description" content="把《故事》第 1–N 章读成一张可以点开的网：人物、势力、地点、术语与证据，全部可点击、可回溯。">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="stylesheet" href="assets/css/reader.css">
+  <link rel="stylesheet" href="assets/css/atlas.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="progress-rail" aria-hidden="true"><div id="progress-bar" class="progress-bar"></div></div>
+
+  <header class="topbar">
+    <a class="brand" href="#/" aria-label="返回首页">
+      <span class="brand-mark">STORY</span>
+      <span class="brand-sep">/</span>
+      <span class="brand-name">ARCHIVE</span>
+    </a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="#/" data-nav="home">首页</a>
+      <a href="#/recap" data-nav="recap">前情提要</a>
+      <a href="#/timeline" data-nav="timeline">事件线</a>
+      <a href="#/read/1" data-nav="reader">阅读</a>
+      <a href="#/glossary" data-nav="glossary">术语表</a>
+      <a href="#/atlas" data-nav="atlas">星图</a>
+    </nav>
+    <div class="topbar-actions">
+      <div id="mode-toggle" class="mode-toggle" role="group" aria-label="阅读模式" hidden></div>
+      <button id="theme-toggle" class="icon-btn" type="button" title="切换主题" aria-label="切换主题">◐</button>
+      <button id="font-toggle" class="icon-btn font-btn" type="button" title="切换字号" aria-label="切换字号">A</button>
+      <button id="spoiler-toggle" class="pill-btn on" type="button" title="防剧透：只显示当前章节及之前的信息" aria-pressed="true">防剧透</button>
+    </div>
+  </header>
+
+  <main id="view" class="view" tabindex="-1"></main>
+
+  <aside id="dossier" class="dossier" aria-hidden="true" aria-label="实体档案">
+    <div class="dossier-inner" id="dossier-inner"></div>
+  </aside>
+  <div id="dossier-backdrop" class="dossier-backdrop" hidden></div>
+
+  <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <noscript>
+    <div class="noscript">这个阅读站需要启用 JavaScript 才能显示富结构内容。</div>
+  </noscript>
+
+  <script src="data/config.js"></script>
+  <script src="data/chapters.js"></script>
+  <script src="data/entities.js"></script>
+  <script src="data/meta.js"></script>
+  <script src="data/recap.js"></script>
+  <script src="data/worldview.js"></script>
+  <script src="data/timeline.js"></script>
+  <script src="data/mentions.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/dossier.js"></script>
+  <script src="assets/js/reader.js"></script>
+  <script src="assets/js/graph.js"></script>
+  <script src="assets/js/atlas.js"></script>
+  <script src="assets/js/timeline.js"></script>
+  <script src="assets/js/glossary.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

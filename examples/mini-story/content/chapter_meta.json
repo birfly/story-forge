@@ -1,0 +1,29 @@
+{
+  "ch1": {
+    "codename": "THE HANDOVER",
+    "hook": "风暴前的一班。林岚交班时提醒沈舟：无线电有杂音，先记录时间，不要急着回应。",
+    "epigraph": "",
+    "readingMinutes": 4,
+    "cast": ["shenzhou", "linlan", "lighthouse", "radio", "keeper"],
+    "takeaways": [
+      "林岚把钥匙、值班表和手电交给沈舟，并提醒无线电有杂音。",
+      "沈舟十八点点亮灯塔，十九点收到一段坐标和“收到请回答”。",
+      "他没有继续呼叫，把时间写在值班表背面。"
+    ],
+    "newTerms": ["keeper", "radio"]
+  },
+  "ch2": {
+    "codename": "REPLY",
+    "hook": "风暴切断了岸上线路，无线电成了唯一能用的联系方式。",
+    "epigraph": "",
+    "readingMinutes": 5,
+    "cast": ["shenzhou", "linlan", "boat_captain", "radio", "storm", "fishing_boat", "rescue"],
+    "takeaways": [
+      "浙渔0713报告主机故障，船上有六人，包括两个孩子。",
+      "岸上电话不通，林岚回到值班室，两人轮流报坐标。",
+      "零点二十分，渔船被拖进锚地，六人获救。",
+      "沈舟把结果写进值班表，林岚在椅子上睡着。"
+    ],
+    "newTerms": ["fishing_boat", "rescue"]
+  }
+}

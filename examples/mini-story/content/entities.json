@@ -1,0 +1,159 @@
+{
+  "entities": [
+    {
+      "id": "shenzhou",
+      "type": "character",
+      "name": "沈舟",
+      "aliases": ["沈舟"],
+      "tagline": "白塔灯塔的守夜人，今晚接班。",
+      "summary": "白塔灯塔的守夜人。第一章接班，风暴当晚收到求救，留在值班室记录坐标、联系岸上，并把结果写进值班表。",
+      "spoilerFrom": 1,
+      "firstAppear": 1,
+      "icon": "沈",
+      "color": "#e23a4e",
+      "evidence": [
+        {"chapter": "ch1", "section": "sch1-0-1", "quote": "沈舟到白塔灯塔时，雨还没下。", "note": "接班"},
+        {"chapter": "ch2", "section": "sch2-0-2", "quote": "沈舟把外套盖在她身上", "note": "风暴夜值班"}
+      ]
+    },
+    {
+      "id": "linlan",
+      "type": "character",
+      "name": "林岚",
+      "aliases": ["林岚"],
+      "tagline": "前一班守夜人，交班后本该离开。",
+      "summary": "前一班守夜人。交班时提醒沈舟无线电有杂音，先记录时间，不要急着回应。风暴当晚她回到值班室，负责重复报坐标。",
+      "spoilerFrom": 1,
+      "firstAppear": 1,
+      "icon": "林",
+      "color": "#e23a4e",
+      "evidence": [
+        {"chapter": "ch1", "section": "sch1-0-1", "quote": "林岚在值班室等他。", "note": "交班"},
+        {"chapter": "ch2", "section": "sch2-0-1", "quote": "林岚推门进来", "note": "返回值班室"}
+      ]
+    },
+    {
+      "id": "boat_captain",
+      "type": "character",
+      "name": "浙渔0713 的船长",
+      "aliases": [],
+      "tagline": "浙渔0713的船长，只通过无线电出现。",
+      "summary": "浙渔0713的船长。船在风暴中主机故障，通过无线电报告坐标和船上人数：六人，其中两个孩子。",
+      "spoilerFrom": 2,
+      "firstAppear": 2,
+      "icon": "周",
+      "color": "#e23a4e",
+      "evidence": [
+        {"chapter": "ch2", "section": "sch2-0-1", "quote": "浙渔0713，位置北纬……东经……主机故障，船在漂。", "note": "求救"}
+      ]
+    },
+    {
+      "id": "lighthouse",
+      "type": "location",
+      "name": "白塔灯塔",
+      "aliases": ["白塔灯塔", "灯塔"],
+      "tagline": "海岸边的灯塔，风暴里仍然亮着。",
+      "summary": "海岸边的灯塔。守夜人十八点开灯，次日六点关灯；每两小时记录一次风向和浪高。风暴里光柱仍然转动。",
+      "spoilerFrom": 1,
+      "firstAppear": 1,
+      "icon": "塔",
+      "color": "#7fd6d6",
+      "evidence": [
+        {"chapter": "ch1", "section": "sch1-0-2", "quote": "十八点，他点亮灯塔。", "note": "开灯"}
+      ]
+    },
+    {
+      "id": "radio",
+      "type": "term",
+      "name": "无线电",
+      "aliases": ["无线电"],
+      "tagline": "值班室窗边的设备，平时有杂音。",
+      "summary": "值班室窗边的无线电。平时有杂音；风暴切断岸上线路后，它仍能用备用电池工作，是灯塔与海上联系的设备。",
+      "spoilerFrom": 1,
+      "firstAppear": 1,
+      "icon": "无",
+      "color": "#8a93a0",
+      "evidence": [
+        {"chapter": "ch1", "section": "sch1-0-2", "quote": "值班室的无线电放在窗边。", "note": "设备位置"}
+      ]
+    },
+    {
+      "id": "storm",
+      "type": "event",
+      "name": "风暴",
+      "aliases": ["风暴"],
+      "tagline": "交班当晚到来，切断岸上线路。",
+      "summary": "交班当晚到来的风暴。它切断岸上线路，让补给船在锚地避风，也让浙渔0713失去动力。",
+      "spoilerFrom": 2,
+      "firstAppear": 2,
+      "icon": "风",
+      "color": "#d98c5f",
+      "evidence": [
+        {"chapter": "ch2", "section": "sch2-0-1", "quote": "二十一点，风暴到了。", "note": "到来"}
+      ]
+    },
+    {
+      "id": "fishing_boat",
+      "type": "term",
+      "name": "浙渔0713",
+      "aliases": ["浙渔0713"],
+      "tagline": "在风暴中失去动力的渔船，船上有六人。",
+      "summary": "一艘在风暴中主机故障的渔船。船上有六人，包括两个孩子。船长通过无线电报告坐标和人数，等待救援。",
+      "spoilerFrom": 2,
+      "firstAppear": 2,
+      "icon": "渔",
+      "color": "#8a93a0",
+      "evidence": [
+        {"chapter": "ch2", "section": "sch2-0-1", "quote": "浙渔0713，位置北纬……", "note": "求救船"}
+      ]
+    },
+    {
+      "id": "rescue",
+      "type": "event",
+      "name": "风暴夜救援",
+      "aliases": [],
+      "tagline": "灯塔、无线电和两条船接力完成的救援。",
+      "summary": "从收到求救到渔船被拖进锚地的过程。沈舟记录坐标，林岚重复呼叫，另一条船靠近拖带。零点二十分，渔船被拖进锚地，六人获救。",
+      "spoilerFrom": 2,
+      "firstAppear": 2,
+      "icon": "救",
+      "color": "#d98c5f",
+      "evidence": [
+        {"chapter": "ch2", "section": "sch2-0-2", "quote": "零点二十分，渔船被拖进锚地。", "note": "救援完成"}
+      ]
+    },
+    {
+      "id": "keeper",
+      "type": "term",
+      "name": "守夜人",
+      "aliases": ["守夜人"],
+      "tagline": "负责灯塔开关与记录的人。",
+      "summary": "负责灯塔开关、记录风向和浪高的人。白塔灯塔的守夜人按值班表工作：十八点开灯，次日六点关灯。",
+      "spoilerFrom": 1,
+      "firstAppear": 1,
+      "icon": "守",
+      "color": "#8a93a0",
+      "evidence": [
+        {"chapter": "ch1", "section": "sch1-0-2", "quote": "表上写着：十八点开灯，次日六点关灯", "note": "值班表"}
+      ]
+    }
+  ],
+  "relations": [
+    {"from": "shenzhou", "to": "linlan", "label": "交接班 / 同事", "kind": "ally", "spoilerFrom": 1},
+    {"from": "shenzhou", "to": "lighthouse", "label": "值守", "kind": "contract", "spoilerFrom": 1},
+    {"from": "linlan", "to": "lighthouse", "label": "值守", "kind": "contract", "spoilerFrom": 1},
+    {"from": "shenzhou", "to": "radio", "label": "使用", "kind": "contract", "spoilerFrom": 1},
+    {"from": "shenzhou", "to": "boat_captain", "label": "无线电联系", "kind": "ally", "spoilerFrom": 2},
+    {"from": "linlan", "to": "boat_captain", "label": "无线电联系", "kind": "ally", "spoilerFrom": 2},
+    {"from": "boat_captain", "to": "fishing_boat", "label": "船长 / 船", "kind": "contract", "spoilerFrom": 2},
+    {"from": "lighthouse", "to": "storm", "label": "被风暴包围", "kind": "hostile", "spoilerFrom": 2},
+    {"from": "rescue", "to": "shenzhou", "label": "参与", "kind": "ally", "spoilerFrom": 2},
+    {"from": "rescue", "to": "linlan", "label": "参与", "kind": "ally", "spoilerFrom": 2},
+    {"from": "rescue", "to": "boat_captain", "label": "被救", "kind": "ally", "spoilerFrom": 2},
+    {"from": "rescue", "to": "fishing_boat", "label": "救援对象", "kind": "ally", "spoilerFrom": 2},
+    {"from": "radio", "to": "rescue", "label": "联络工具", "kind": "contract", "spoilerFrom": 2},
+    {"from": "storm", "to": "rescue", "label": "阻碍", "kind": "hostile", "spoilerFrom": 2},
+    {"from": "keeper", "to": "shenzhou", "label": "身份", "kind": "contract", "spoilerFrom": 1},
+    {"from": "keeper", "to": "linlan", "label": "身份", "kind": "contract", "spoilerFrom": 1}
+  ]
+}

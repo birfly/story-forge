@@ -1,0 +1,41 @@
+{
+  "slug": "",
+  "title": "",
+  "subtitle": "富结构故事阅读站",
+  "description": "把故事读成一张可以点开的网：人物、势力、地点、术语与证据，全部可点击、可回溯。",
+  "lede": "这不是一篇平铺的小说。人物、势力、地点、术语与证据被织成一张网——点开任何一个名字，都能看见它从哪里来、与谁相连。",
+  "eyebrow": "",
+  "brand": {
+    "mark": "STORY",
+    "name": "ARCHIVE"
+  },
+  "footerNote": "STORY ARCHIVE",
+  "footerDetail": "",
+  "sourceDir": "sources",
+  "retoldDir": "retold",
+  "siteDir": "site",
+  "dataDir": "site/data",
+  "kind": "import",
+  "modes": ["original"],
+  "defaultMode": "original",
+  "primaryMode": "original",
+  "sourcePolicy": "required",
+  "modeLabels": {
+    "original": "原文",
+    "retold": "复述"
+  },
+  "volumes": [],
+  "illustrations": {
+    "enabled": true,
+    "dir": "assets/img",
+    "autoPlace": true,
+    "maxPerChapter": 4,
+    "defaultMode": "both",
+    "sources": ["local", "wikimedia", "openverse"],
+    "licenseAllow": ["public-domain", "cc0", "cc-by", "cc-by-sa"]
+  },
+  "titleSeparator": "：",
+  "accentPalette": ["#e23a4e", "#7fd6d6", "#c9a227", "#d98c5f", "#6fbf8f", "#7a9fe2"],
+  "ready": [],
+  "chapters": []
+}

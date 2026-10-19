@@ -1,0 +1,61 @@
+{
+  "title": "事件线",
+  "kicker": "TIMELINE",
+  "lede": "从交班到风暴里的求救：灯塔、无线电和两个守夜人。",
+  "events": [
+    {
+      "id": "ev-handover",
+      "title": "交班",
+      "summary": "林岚把钥匙、值班表和手电交给沈舟，提醒他无线电有杂音。",
+      "chapter": "ch1",
+      "storyTime": "第一天 16:00",
+      "order": 1,
+      "entities": ["shenzhou", "linlan", "lighthouse"],
+      "causes": [],
+      "consequences": ["ev-signal"],
+      "spoilerFrom": 1,
+      "evidence": [
+        {
+          "chapter": "ch1",
+          "quote": "林岚在值班室等他。"
+        }
+      ]
+    },
+    {
+      "id": "ev-signal",
+      "title": "无线电里的坐标",
+      "summary": "十九点，无线电里出现一段短促的人声，报出一个坐标和一句“收到请回答”。",
+      "chapter": "ch1",
+      "storyTime": "第一天 19:07",
+      "order": 2,
+      "entities": ["shenzhou", "radio"],
+      "causes": ["ev-handover"],
+      "consequences": ["ev-rescue"],
+      "spoilerFrom": 1,
+      "evidence": [
+        {
+          "chapter": "ch1",
+          "quote": "十九点，无线电里出现一段短促的人声。"
+        }
+      ]
+    },
+    {
+      "id": "ev-rescue",
+      "title": "风暴夜的救援",
+      "summary": "沈舟和林岚轮流报坐标，另一条船在二十三点靠近，六人获救。",
+      "chapter": "ch2",
+      "storyTime": "第二天 00:23",
+      "order": 3,
+      "entities": ["shenzhou", "linlan", "boat_captain", "rescue", "storm"],
+      "causes": ["ev-signal"],
+      "consequences": [],
+      "spoilerFrom": 2,
+      "evidence": [
+        {
+          "chapter": "ch2",
+          "quote": "零点二十三分，浙渔0713，六人获救。"
+        }
+      ]
+    }
+  ]
+}

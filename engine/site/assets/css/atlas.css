@@ -1,0 +1,464 @@
+/* ============================================================
+   Atlas — the network view
+   ============================================================ */
+
+.atlas-view {
+  height: calc(100vh - var(--topbar-h));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.atlas-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem 1rem;
+  padding: 0.7rem clamp(0.8rem, 2.4vw, 1.6rem);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-2);
+  z-index: 5;
+}
+
+.atlas-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-right: 0.4rem;
+}
+
+.atlas-title strong {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+}
+
+.atlas-title span {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.16em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+
+.atlas-search {
+  position: relative;
+  flex: 0 1 220px;
+}
+
+.atlas-search input {
+  width: 100%;
+  height: 34px;
+  padding: 0 0.7rem 0 1.9rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.8rem;
+}
+
+.atlas-search input::placeholder {
+  color: var(--text-faint);
+}
+
+.atlas-search::before {
+  content: "⌕";
+  position: absolute;
+  left: 0.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-faint);
+  font-size: 0.9rem;
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.filter-chip {
+  height: 30px;
+  padding: 0 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--line);
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  transition: all 0.2s var(--ease);
+}
+
+.filter-chip .swatch {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--chip-color, var(--text-faint));
+}
+
+.filter-chip.on {
+  color: var(--text);
+  border-color: var(--line-strong);
+  background: var(--surface-2);
+}
+
+.filter-chip.off {
+  opacity: 0.4;
+}
+
+.chapter-range {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-left: auto;
+}
+
+.chapter-range label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+
+.chapter-range output {
+  min-width: 2.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  text-align: right;
+}
+
+.chapter-range input[type="range"] {
+  width: 120px;
+  accent-color: var(--accent);
+}
+
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--line);
+}
+
+.view-toggle button {
+  height: 30px;
+  padding: 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+}
+
+.view-toggle button.on {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+/* stage */
+.atlas-stage {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(700px 500px at 50% 45%, var(--surface) 0%, transparent 70%),
+    radial-gradient(circle at 50% 50%, transparent 0 1px, var(--line) 1px 2px, transparent 2px) 0 0 / 28px 28px,
+    var(--bg);
+}
+
+[data-theme="light"] .atlas-stage {
+  background:
+    radial-gradient(700px 500px at 50% 45%, var(--surface) 0%, transparent 70%),
+    radial-gradient(circle at 50% 50%, transparent 0 1px, var(--line) 1px 2px, transparent 2px) 0 0 / 28px 28px,
+    var(--bg);
+}
+
+.atlas-svg {
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+}
+
+.atlas-svg.dragging {
+  cursor: grabbing;
+}
+
+.atlas-svg .viewport {
+  will-change: transform;
+}
+
+.edge {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  opacity: 0.55;
+  transition: opacity 0.18s var(--ease), stroke-width 0.18s var(--ease);
+}
+
+.edge.kind-ally { stroke: var(--accent-2); }
+.edge.kind-hostile { stroke: var(--accent); stroke-dasharray: 5 4; }
+.edge.kind-family { stroke: var(--gold); }
+.edge.kind-contract { stroke: var(--text-faint); stroke-dasharray: 2 3; }
+.edge.kind-unknown { stroke: var(--text-faint); stroke-dasharray: 1 4; }
+
+.edge.active {
+  opacity: 1;
+  stroke-width: 2;
+}
+
+.node {
+  cursor: pointer;
+}
+
+.node .node-shape {
+  fill: var(--surface-2);
+  stroke: var(--node-color, var(--line-strong));
+  stroke-width: 1.2;
+  transition: fill 0.18s var(--ease), stroke-width 0.18s var(--ease), filter 0.18s var(--ease);
+}
+
+.node:hover .node-shape,
+.node.active .node-shape {
+  fill: var(--node-color, var(--surface-3));
+  stroke-width: 2;
+  filter: drop-shadow(0 0 8px var(--node-color, var(--line-strong)));
+}
+
+.node .node-icon {
+  fill: var(--text);
+  font-family: var(--font-serif);
+  font-size: 12px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  user-select: none;
+}
+
+.node .node-label {
+  fill: var(--text-dim);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  text-anchor: middle;
+  pointer-events: none;
+  user-select: none;
+  paint-order: stroke;
+  stroke: var(--bg);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.node.active .node-label,
+.node:hover .node-label {
+  fill: var(--text);
+}
+
+.node.dim,
+.edge.dim {
+  opacity: 0.15;
+}
+
+.node.masked .node-icon {
+  fill: var(--text-faint);
+}
+
+.node.masked .node-label {
+  display: none;
+}
+
+.node.match .node-shape {
+  stroke: var(--gold);
+  stroke-width: 2.5;
+  fill: var(--gold-soft);
+}
+
+/* legend + hints + zoom */
+.atlas-legend {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+  padding: 0.6rem 0.75rem;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+}
+
+@supports not (background: color-mix(in srgb, red 50%, blue)) {
+  .atlas-legend {
+    background: var(--bg);
+  }
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend-line {
+  width: 16px;
+  height: 1px;
+  background: var(--text-faint);
+}
+
+.legend-line.ally { background: var(--accent-2); }
+.legend-line.hostile { background: var(--accent); }
+.legend-line.family { background: var(--gold); }
+.legend-line.contract { background: var(--text-faint); }
+
+.atlas-hint {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  text-align: right;
+  line-height: 1.8;
+  pointer-events: none;
+}
+
+.zoom-controls {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.zoom-controls button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.zoom-controls button:hover {
+  color: var(--text);
+  border-color: var(--line-strong);
+}
+
+/* list view */
+.atlas-list {
+  height: 100%;
+  overflow-y: auto;
+  padding: 1.4rem clamp(1rem, 4vw, 3rem) 4rem;
+  display: none;
+}
+
+.atlas-list.on {
+  display: block;
+}
+
+.atlas-stage.off {
+  display: none;
+}
+
+.list-group {
+  margin-bottom: 2rem;
+}
+
+.list-group h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+
+.list-group h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.list-entity {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 0.8rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  transition: background 0.18s var(--ease);
+}
+
+.list-entity:hover {
+  background: var(--surface);
+}
+
+.list-entity .icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  color: var(--entity-color, var(--accent));
+  font-family: var(--font-serif);
+}
+
+.list-entity .name {
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+}
+
+.list-entity .tagline {
+  margin-top: 0.1rem;
+  color: var(--text-faint);
+  font-size: 0.78rem;
+}
+
+.list-entity .rel-count {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+}
+
+.atlas-empty {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--text-faint);
+  font-family: var(--font-serif);
+}
+
+@media (max-width: 900px) {
+  .atlas-toolbar {
+    gap: 0.5rem;
+    padding: 0.6rem 0.8rem;
+  }
+  .atlas-search {
+    flex: 1 1 160px;
+  }
+  .chapter-range {
+    margin-left: 0;
+  }
+  .chapter-range input[type="range"] {
+    width: 90px;
+  }
+  .atlas-legend {
+    display: none;
+  }
+  .atlas-hint {
+    display: none;
+  }
+}

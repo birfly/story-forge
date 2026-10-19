@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Story Forge generated output
+examples/*/site/
+examples/*/dist/
+examples/*/build/
+
+# Local and editor state
+.claude/
+.tmp/
+.venv/
+venv/
+.DS_Store
+Thumbs.db
+*.log
