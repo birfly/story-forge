@@ -124,6 +124,38 @@ class CliEndToEndTests(unittest.TestCase):
             self.assertTrue((project / "dist" / "creation.html").is_file())
             self.assertEqual(run("verify", str(project)).returncode, 0)
 
+    def test_built_site_includes_new_pages_and_stays_offline(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            project = self._new(Path(temp), "creation")
+            (project / "chapters" / "01.md").write_text(CHAPTER, encoding="utf-8")
+            self.assertEqual(run("build", str(project), "--single").returncode, 0)
+
+            index = (project / "site" / "index.html").read_text(encoding="utf-8")
+            for asset in (
+                "data/timeline.js",
+                "data/mentions.js",
+                "assets/js/timeline.js",
+                "assets/js/glossary.js",
+                "assets/css/pages.css",
+            ):
+                self.assertIn(asset, index)
+
+            single = (project / "dist" / "creation.html").read_text(encoding="utf-8")
+            for marker in (
+                "STORY_TIMELINE",
+                "STORY_MENTIONS",
+                "timeline-page",
+                "glossary-page",
+                "findPath",
+            ):
+                self.assertIn(marker, single)
+            for forbidden in (
+                '<script src="http',
+                '<link rel="stylesheet" href="http',
+                '<img src="http',
+            ):
+                self.assertNotIn(forbidden, single)
+
 
 if __name__ == "__main__":
     unittest.main()
