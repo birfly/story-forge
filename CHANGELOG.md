@@ -3,6 +3,31 @@
 All notable changes to Story Forge are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.0-preview.2] — 2026-10-19
+
+### Added
+
+- **Search-first gate for missing sources**: `source-check` now returns a
+  structured `searchPlan` (priority sources, query templates, sources to avoid)
+  and a state machine: `search_original` → `import_source` / `request_source`.
+- **Search attempt recording**: `source-check --record-search --outcome …`
+  writes every search attempt, query, candidate and note to
+  `content/source_provenance.json` (`searchAttempts`).
+- `source-check` refuses to move to “ask the user for a file” until at least
+  one search attempt is recorded. Skills, commands, `status` and README now
+  enforce the same order.
+- New resource file `engine/source_sources.json` with official, public-domain,
+  open-license, user-provided and reference source priorities.
+- 8 additional tests for the search-first state machine.
+
+### Changed
+
+- `source-check` output adds `searchPlan`, `author`, `searchAttempts` and
+  `lastSearchOutcome`; new states `import_source`, `request_source`,
+  `reference_ready`.
+- `project_status` next actions surface search recording and fallback-to-user
+  steps.
+
 ## [1.2.0-preview.1] — 2026-10-19
 
 Preview release. Focus: real input, long-project workflow, verifiable quality.

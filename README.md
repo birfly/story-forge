@@ -6,7 +6,7 @@
 
 ![Story Forge 阅读站首页](docs/screenshot.png)
 
-> **预览版 `1.2.0-preview.1`**
+> **预览版 `1.2.0-preview.2`**
 >
 > 支持 **Claude Code**（skills / commands / plugin 结构）。开发与验证环境为 Windows + Python 3.13；CI 覆盖 Ubuntu/Windows × Python 3.11/3.13。其他宿主尚未验证。已知限制见文末。
 
@@ -56,11 +56,24 @@ import / retelling 项目缺少源文本时，不要先停下来要文件。先�
 python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" source-check <project> --json
 ```
 
-- `next: "search_original"` → 用 WebSearch 按返回的 `queries` 搜索原文，再用 WebFetch 读取候选页。
-- 优先官方、公有领域、开放许可、用户提供或已授权的来源；只把有权使用的全文写进 `sources/`。
-- 受版权保护的作品只把可靠页面记为 `kind: "reference"`，不要整段复制正文。
+- `next: "search_original"` / `"search_reference"` → **必须先搜索**。返回的 `searchPlan` 给出 queries、优先来源（官方、公有领域、开放许可、用户提供、参考）和应避免的来源。
+- `next: "import_source"` → 搜索记录显示已找到全文，用 `ingest` 导入。
+- `next: "request_source"` → 已记录搜索尝试但没找到可用全文，这时才向用户要文件。
+- `next: "reference_ready"` → 同人参考已足够，可以开始写作。
+- 只把有权使用的全文写进 `sources/`；受版权保护的作品只把可靠页面记为 `kind: "reference"`。
 - 在 `content/source_provenance.json` 登记标题、作者、URL、访问日期、用途与许可。
-- 找不到就如实说明已试查询与缺口，再请用户提供文件。
+
+每次搜索后必须记录尝试：
+
+```bash
+python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" source-check <project> \
+  --record-search --outcome not_found \
+  --query "作品名 原文" --query "作品名 小说 全文" \
+  --candidate "某 Wiki|https://…|reference" \
+  --notes "只找到参考页，没有可用全文"
+```
+
+`--outcome` 只能是 `found_text` / `found_reference_only` / `not_found` / `user_declined` / `blocked`。**没有记录搜索尝试之前，不要直接向用户要文件。**
 
 下载/整理好的文件用 `story.py ingest` 转成章节 Markdown。完整规则见 `skills/story-source/SKILL.md` 与 `/story-source`。
 
@@ -225,6 +238,7 @@ story-forge/
 │   │   ├── illustrations.json      # 插图 manifest 空模板
 │   │   └── *.json                  # 空模板
 │   ├── site/                       # 阅读站模板（CSS/JS/HTML）
+│   ├── source_sources.json         # 搜索来源优先级与查询模板
 │   └── project.template.json
 ├── scripts/story.py                # CLI：new / ingest / parse / build / verify /
 │                                   #      single / status / audit / style / source-check /

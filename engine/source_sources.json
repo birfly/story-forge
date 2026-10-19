@@ -1,0 +1,48 @@
+{
+  "priority": [
+    {
+      "id": "official",
+      "label": "官方 / 出版社 / 作者官网",
+      "note": "优先；确认授权状态"
+    },
+    {
+      "id": "public-domain",
+      "label": "公有领域",
+      "examples": [
+        "Project Gutenberg",
+        "Wikisource",
+        "Aozora Bunko",
+        "Chinese Text Project",
+        "Internet Archive"
+      ]
+    },
+    {
+      "id": "open-license",
+      "label": "开放许可",
+      "examples": ["CC0", "CC BY", "CC BY-SA"]
+    },
+    {
+      "id": "user-provided",
+      "label": "用户提供 / 已授权",
+      "note": "用户自己的文件或明确授权"
+    },
+    {
+      "id": "reference",
+      "label": "参考来源",
+      "examples": ["官方 wiki", "百科", "剧情总结", "攻略"],
+      "note": "只能作为 reference，不能当正文"
+    }
+  ],
+  "queryTemplates": [
+    "{title}",
+    "{title} 原文",
+    "{title} 小说 全文",
+    "{title} 剧情 文本",
+    "{title} wiki",
+    "{title} site:zh.wikisource.org",
+    "{title} site:gutenberg.org",
+    "{title} site:aozora.gr.jp",
+    "{title} 作者 {author}"
+  ],
+  "avoid": ["盗版聚合站", "未授权全文转载", "网盘转载", "来源不明的全文"]
+}

@@ -13,10 +13,36 @@ description: "在开始原文放入或复述之前，检查项目是否有源文
 python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" source-check <project> --json
 ```
 
-- `next: "search_original"` — import / retelling 项目缺少源文本，必须搜索或索取。
-- `next: "search_reference"` — creation 项目声明了 `basedOn`，缺少原作/设定参考。
+- `next: "search_original"` — import / retelling 项目缺少源文本，**必须先搜索**。
+- `next: "search_reference"` — creation 项目声明了 `basedOn`，缺少原作/设定参考，**必须先搜索**。
+- `next: "import_source"` — 搜索记录显示已找到全文，去 `ingest`。
+- `next: "request_source"` — 已记录搜索尝试但没找到可用全文，向用户要文件。
+- `next: "reference_ready"` — 参考已足够，可以开始写作。
 - `next: "record_provenance"` / `"confirm_rights"` — 已有文本，但来源或许可没登记。
-- `next: "ready"` / `"not_required"` — 不需要再找。
+- `next: "ready"` / `"not_required"` / `"optional"` — 不需要再找。
+
+## 搜索前置门（硬性）
+
+没有源文本时，顺序固定，不能跳过：
+
+1. 运行 `source-check`。
+2. `next` 为 `search_original` / `search_reference` 时，先用 WebSearch / WebFetch 搜索；至少检查 `searchPlan.priority` 里的官方、公有领域、开放许可来源。
+3. 每次搜索后，必须把结果写进来源文件：
+
+```bash
+python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" source-check <project> \
+  --record-search --outcome not_found \
+  --query "作品名 原文" --query "作品名 小说 全文" \
+  --candidate "某 Wiki|https://…|reference" \
+  --notes "只找到参考页，没有可用全文"
+```
+
+`--outcome` 只能是 `found_text` / `found_reference_only` / `not_found` / `user_declined` / `blocked`。
+
+4. 只有记录为 `not_found`、`found_reference_only` 或 `user_declined` 后，才向用户索取文件。
+5. 找到可用全文后，先 `ingest` 导入并登记 `primary-text`，再跑 `source-check` 确认 `next` 变为 `ready`。
+
+**没有记录搜索尝试之前，不要直接停下来问用户要文件。**
 
 没有项目时，先 scaffold；连作品名都没有时，只问一个问题：作品名、作者、你要用的是哪一版。
 
@@ -89,7 +115,7 @@ python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" ingest <project> <source-file-or-d
 
 ## 找不到时
 
-明确报告：
+先用 `source-check --record-search --outcome not_found`（只找到参考页时用 `found_reference_only`）记录，再明确报告：
 
 - 搜过哪些查询、看过哪些候选；
 - 哪些只能当参考、哪些不可用；
@@ -100,8 +126,8 @@ python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" ingest <project> <source-file-or-d
 
 ## 硬性规则
 
-- 先搜索，再向用户要文件；但找不到时必须如实说找不到。
+- 先搜索并记录，再向用户要文件；找不到时必须如实说找不到。
 - 原文只从可靠来源获取；版权不明时只作参考。
-- 所有来源写入 `content/source_provenance.json`。
+- 所有来源与搜索尝试写入 `content/source_provenance.json`。
 - 构建产物仍然离线，不在阅读站运行时发起网络请求。
 - 正文保真规则不变：`sources/` 只整理结构，不改写。

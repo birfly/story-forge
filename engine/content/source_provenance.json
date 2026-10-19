@@ -1,4 +1,5 @@
 {
   "policy": "required",
-  "entries": []
+  "entries": [],
+  "searchAttempts": []
 }

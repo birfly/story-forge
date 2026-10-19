@@ -18,7 +18,9 @@ argument-hint: <source-dir> [chapter-range]
    `python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" new <project> --template retelling --title "…" --slug "…"`
 3. **源文本获取（默认）**：如果用户只给了作品名、`sources/` 为空，先按 `story-source` 技能搜索原文：
    `python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" source-check <project> --json`
-   按返回的 `queries` 搜索；只把公有领域 / 开放许可 / 用户提供 / 已授权的全文写进 `sources/`，并在 `content/source_provenance.json` 登记。找不到就如实说明并请用户提供文件。
+   按返回的 `searchPlan.queries` 搜索；至少检查官方、公有领域、开放许可来源。**每次搜索后必须**用
+   `source-check <project> --record-search --outcome <结果> --query "…" --notes "…"`
+   记录；在记录搜索尝试之前，不要直接停下来要文件。只把公有领域 / 开放许可 / 用户提供 / 已授权的全文写进 `sources/`，并在 `content/source_provenance.json` 登记。找不到时记录 `not_found`，再如实说明并请用户提供文件。
 4. 把原文整理成 `sources/*.md`（H1/H2/H3）；把复述版写进 `retold/*.md`。两边文件名与 H1/H2/H3 结构一一对应（`sources/01.md` ↔ `retold/01.md`）。
 5. 配置 `project.json`：`kind: "retelling"`、`modes: ["original","retold"]`、`sourceDir: "sources"`、`retoldDir: "retold"`；章节条目同时写 `files` 与 `retoldFiles`。
 6. **先写 `content/style_profile.md`**：从原文提取人称、句长、词汇、对话比例、标题习惯、明确不写的东西，并摘录 3–5 段样本。

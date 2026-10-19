@@ -578,6 +578,15 @@ python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" verify <project>
       "license": "public-domain",  // public-domain | cc0 | cc-by | cc-by-sa | user-provided | licensed | unknown
       "notes": "章节 1–12；来源页标注公有领域"
     }
+  ],
+  "searchAttempts": [
+    {
+      "at": "2026-10-19T14:02:00+08:00",
+      "outcome": "not_found",      // found_text | found_reference_only | not_found | user_declined | blocked
+      "queries": ["作品名 原文", "作品名 小说 全文"],
+      "candidates": ["某 Wiki|https://…|reference"],
+      "notes": "只找到参考页，没有可用全文"
+    }
   ]
 }
 ```
@@ -587,6 +596,8 @@ python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" verify <project>
 - `kind: "reference"` 只用于 wiki、剧情总结、攻略等参考资料，不能作为 `sources/` 正文。
 - 只有 public-domain / CC / user-provided / licensed 的 `primary-text` 才被视为可用的主文本。
 - import / retelling 的 `sourcePolicy` 通常是 `required`；creation 为 `optional`，可用 `basedOn` 指定原作。
+- 没有源文本时，`source-check` 的 `next` 会依次经过 `search_original` → `import_source` / `request_source`；`searchAttempts` 为空时不允许直接向用户索要文件。
+- 每次搜索后用 `python scripts/story.py source-check <project> --record-search --outcome <结果> --query "…"` 记录；`--outcome` 取上面的五个值。
 
 ## 13. 状态、审计与文风报告
 

@@ -860,19 +860,37 @@ def build_status(
                     "fileCount",
                     "next",
                     "queries",
+                    "searchPlan",
                     "provenance",
+                    "guidance",
                 )
             }
-            if source_info["next"] in ("search_original", "search_reference"):
+            next_action = source_info["next"]
+            if next_action in ("search_original", "search_reference"):
                 source_action_needed = True
                 queries = " / ".join(source_info.get("queries", [])[:3])
                 actions.insert(
                     0,
-                    "没有源文本：先用 WebSearch 搜索 "
-                    f"{queries or source_info.get('title', '')}，"
-                    f"再用 python scripts/story.py ingest {project_label} <source> 导入",
+                    "没有源文本且没有搜索记录：先用 WebSearch/WebFetch 搜索 "
+                    f"{queries or source_info.get('title', '')}；"
+                    "搜索后用 python scripts/story.py source-check "
+                    f"{project_label} --record-search --outcome <结果> 记录尝试",
                 )
-            elif source_info["next"] in ("record_provenance", "confirm_rights"):
+            elif next_action == "import_source":
+                source_action_needed = True
+                actions.insert(
+                    0,
+                    "搜索记录显示已找到可用全文：用 "
+                    f"python scripts/story.py ingest {project_label} <source> 导入，"
+                    "并在 content/source_provenance.json 登记 primary-text 与许可",
+                )
+            elif next_action == "request_source":
+                source_action_needed = True
+                actions.append(
+                    "搜索未找到可用全文：把已试查询、候选与缺口告诉用户，请其提供文件；"
+                    "用 source-check --record-search 记录 not_found / user_declined"
+                )
+            elif next_action in ("record_provenance", "confirm_rights"):
                 source_action_needed = True
                 actions.append(
                     "补全 content/source_provenance.json："

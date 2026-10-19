@@ -18,7 +18,9 @@ argument-hint: <project-path> [premise]
    模板生成 `kind: "creation"`、`modes: ["retold"]`，界面标签为“创作”；没有原文模式。
 3. **原作资料（默认，仅同人）**：如果这是基于已有作品的同人，在 `project.json` 写 `basedOn: "原作名"`，然后按 `story-source` 技能搜索原作设定、人物与时间线：
    `python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" source-check <project> --json`
-   参考资料登记为 `kind: "reference"`，不要整段复制受版权保护的正文。原创故事跳过这一步。
+   按 `searchPlan.queries` 搜索，并用
+   `source-check <project> --record-search --outcome <结果> --query "…" --notes "…"`
+   记录；在记录之前不要直接停下来要资料。参考资料登记为 `kind: "reference"`，不要整段复制受版权保护的正文。原创故事跳过这一步。
 4. **先写 `content/style_profile.md`**：
    - 有样文：按样文提取人称、句长、词汇、对话比例、标题习惯、禁止项。
    - 无样文：写一份具体的文风约定，不能写“文笔优美”这种空话。

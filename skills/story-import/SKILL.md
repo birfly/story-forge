@@ -78,13 +78,20 @@ description: "Import existing text as-is into a rich-structured reading site: ve
 如果用户只给了作品名、`sources/` 为空，不要先停下来要文件：
 
 1. 运行 `python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" source-check <project> --json`。
-2. `next` 为 `search_original` 时，按返回的 `queries` 用 WebSearch 查找，再用 WebFetch 读取候选页。
-3. 优先官方、公有领域、开放许可、用户提供或已授权的来源；只把有权使用的全文写进 `sources/`。
-4. 受版权保护的作品只把可靠页面记为 `kind: "reference"`，不要整段复制正文。
-5. 在 `content/source_provenance.json` 登记来源、用途与许可。
-6. 找不到时如实说明已试查询与缺口，再请用户提供文件。
+2. `next` 为 `search_original` 时，按返回的 `searchPlan.queries` 用 WebSearch 查找，再用 WebFetch 读取候选页；至少检查官方、公有领域、开放许可来源。
+3. **每次搜索后必须记录**：
 
-完整规则见 `skills/story-source/SKILL.md`。
+   ```bash
+   python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" source-check <project> \
+     --record-search --outcome not_found \
+     --query "…" --candidate "标题|URL|reference" --notes "…"
+   ```
+
+4. 只把有权使用的全文写进 `sources/`；受版权保护的作品只把可靠页面记为 `kind: "reference"`。
+5. 在 `content/source_provenance.json` 登记来源、用途与许可。
+6. 找不到时先记录 `not_found`，再如实说明已试查询与缺口，请用户提供文件。
+
+**在记录搜索尝试之前，不要直接向用户要文件。** 完整规则见 `skills/story-source/SKILL.md`。
 
 ### 1. 创建项目
 

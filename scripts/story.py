@@ -269,6 +269,16 @@ def cmd_source_check(args: argparse.Namespace) -> None:
         command.append("--strict")
     if args.write_template:
         command.append("--write-template")
+    if args.record_search:
+        command.append("--record-search")
+        if args.outcome:
+            command.extend(["--outcome", args.outcome])
+        for query in args.query or []:
+            command.extend(["--query", query])
+        for candidate in args.candidate or []:
+            command.extend(["--candidate", candidate])
+        if args.notes:
+            command.extend(["--notes", args.notes])
     run_tool(command)
 
 
@@ -402,6 +412,20 @@ def main() -> None:
     source.add_argument("--json", action="store_true")
     source.add_argument("--strict", action="store_true")
     source.add_argument("--write-template", action="store_true")
+    source.add_argument("--record-search", action="store_true")
+    source.add_argument(
+        "--outcome",
+        choices=[
+            "found_text",
+            "found_reference_only",
+            "not_found",
+            "user_declined",
+            "blocked",
+        ],
+    )
+    source.add_argument("--query", action="append", default=[])
+    source.add_argument("--candidate", action="append", default=[])
+    source.add_argument("--notes", default="")
     source.set_defaults(func=cmd_source_check)
 
     single = sub.add_parser("single", help="build the standalone HTML")

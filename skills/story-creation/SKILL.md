@@ -118,8 +118,9 @@ description: "Create a new fanfic or story (新建同人) with a rich-structured
 
 1. 在 `project.json` 写 `"basedOn": "原作名"`。
 2. 运行 `python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" source-check <project> --json`。
-3. `next` 为 `search_reference` 时，按 queries 搜索原作设定、人物、时间线；只登记为 `kind: "reference"`，不要复制受版权保护的正文。
-4. 原创故事跳过这一步。
+3. `next` 为 `search_reference` 时，按 `searchPlan.queries` 搜索原作设定、人物、时间线；只登记为 `kind: "reference"`，不要复制受版权保护的正文。
+4. **搜索后用 `source-check --record-search` 记录**；在记录之前不要直接停下来要资料。
+5. 原创故事跳过这一步。
 
 完整规则见 `skills/story-source/SKILL.md`。
 

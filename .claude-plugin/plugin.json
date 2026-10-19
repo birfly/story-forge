@@ -1,6 +1,6 @@
 {
   "name": "story-forge",
-  "version": "1.2.0",
+  "version": "1.2.0-preview.2",
   "description": "Turn existing text, retellings, or new fanfiction into rich-structured reading sites. Adds source ingestion (txt/epub/docx/html/pdf), project status, content audit, quantitative style metrics, source provenance/search workflow, arbitrary variants, volumes, event timeline, glossary, entity mention index, and graph path finding, alongside the original/retold modes, dossiers, relationship graph, recaps, evidence links, anti-spoiler, and locally hosted illustrations.",
   "author": {
     "name": "Story Forge"

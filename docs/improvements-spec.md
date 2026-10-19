@@ -372,10 +372,12 @@ python scripts/story.py source-check <project> [--json] [--strict] [--write-temp
 行为：
 
 - 该工具**不联网**，只检查源目录、文件数、字数、`content/source_provenance.json` 与许可状态。
-- `import` / `retelling` 的 `sourcePolicy` 默认为 `required`：没有源文件时返回 `next: "search_original"`，并给出 queries（标题、原文、小说 全文、剧情 文本、wiki）。
-- `creation` 默认为 `optional`；若 `project.json` 有 `basedOn`，没有章节时返回 `next: "search_reference"`，按原作名给 queries。
-- 已有源文件但没有 provenance → `record_provenance`；有 provenance 但许可未知 → `confirm_rights`；`kind: "reference"` 不算主文本。
+- 没有源文本时返回结构化 `searchPlan`：优先来源（官方、公有领域、开放许可、用户提供、参考）、queries、应避免的来源。
+- 状态机：`search_original` →（记录 `found_text`）`import_source` /（记录失败）`request_source`；creation 的 `basedOn` 使用 `search_reference` → `reference_ready`。
+- `--record-search --outcome found_text|found_reference_only|not_found|user_declined|blocked` 把每次搜索的查询、候选、备注写入 `content/source_provenance.json` 的 `searchAttempts`。
+- **搜索前置门**：没有任何 `searchAttempts` 时，`next` 保持 `search_original` / `search_reference`；只有记录失败结果后才允许向用户索取文件。三个既有 skill/command 都按这个顺序执行。
+- 搜索资源优先级来自 `engine/source_sources.json`，可独立调整。
 - `--write-template` 创建 `content/source_provenance.json` 与主源目录下的 `PROVENANCE.md`。
-- `status` 读取该报告，把“没有源文本”或“补全 provenance”插入 `nextActions`。
-- 真正的搜索由模型用 WebSearch / WebFetch 完成；`skills/story-source/SKILL.md` 与 `/story-source` 定义来源优先级、版权边界和登记方式。三个既有 skill/command 在源文本缺失时会先走这一步。
+- `status` 读取该报告，把“先搜索并记录”“导入已找到的全文”“向用户索取文件”“补全 provenance”插入 `nextActions`。
+- 真正的搜索由模型用 WebSearch / WebFetch 完成；`skills/story-source/SKILL.md` 与 `/story-source` 定义来源优先级、版权边界和登记方式。
 

@@ -20,21 +20,32 @@ argument-hint: <project-path> [work-title]
    ```
 
 2. `next` 为 `search_original` / `search_reference` 时：
-   - 用 `source-check` 给出的 `queries` 做 WebSearch；
+   - 用 `source-check` 返回的 `searchPlan.queries` 做 WebSearch；
    - 用 WebFetch 读取候选页；
    - 优先官方、公有领域、开放许可、用户可授权来源；
+   - 至少检查 `searchPlan.priority` 中的官方、公有领域和开放许可来源；
    - 受版权保护的全文不写入 `sources/`，只把 reliable 资料记为 `reference`。
-3. 找到可用全文或用户提供文件后：
+3. 每次搜索后必须记录：
+
+   ```bash
+   python "$CLAUDE_PLUGIN_ROOT/scripts/story.py" source-check <project> \
+     --record-search --outcome not_found \
+     --query "…" --candidate "标题|URL|reference" --notes "…"
+   ```
+
+   `--outcome` 只能是 `found_text` / `found_reference_only` / `not_found` / `user_declined` / `blocked`。
+   **没有记录搜索尝试之前，不要直接向用户要文件。**
+4. 找到可用全文或用户提供文件后：
    - 用 `story.py ingest` 整理到 `sources/`，或手工整理 H1/H2/H3；
    - 在 `content/source_provenance.json` 登记 title / author / url / accessed / kind / license。
-4. 找不到时：列出已试查询与候选，说明缺什么，请用户提供文件或确认使用权；不要凭记忆补正文。
-5. 再回到 `/story-import`、`/story-retell` 或 `/story-create` 的对应流程。
+5. 找不到时：先记录 `not_found`，再列出已试查询与候选，说明缺什么，请用户提供文件或确认使用权；不要凭记忆补正文。
+6. 再回到 `/story-import`、`/story-retell` 或 `/story-create` 的对应流程。
 
 ## 硬性规则
 
-- 先搜索，再索取文件；找不到就如实报告。
+- 先搜索并用 `--record-search` 记录，再索取文件；找不到就如实报告。
 - 不把盗版全文、未授权转载、参考摘要当正文写入 `sources/`。
-- 所有来源必须登记；`kind: "reference"` 的内容不能当原文。
+- 所有来源与搜索尝试必须登记；`kind: "reference"` 的内容不能当原文。
 - 阅读站构建产物保持离线，不在运行时抓取。
 - 正文保真：只整理结构，不改写。
 
